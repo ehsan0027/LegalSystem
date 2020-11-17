@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -8,10 +9,8 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginInitial());
 
-  @override
-  LoginState get initialState => LoginInitial();
+  LoginBloc() : super(LoginInitial());
 
   @override
   Stream<LoginState> mapEventToState(
@@ -19,14 +18,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async* {
     if (event is LoginUser) {
       yield LoginProcesssing();
-      final String msg = await startLogin();
+      final String msg = await startLogin(event.email,event.password);
+      print("email : ${event.email}");
       print("Login msg:$msg");
-      yield LoginDone();
+      yield LoginDone(msg: "hi");
     }
   }
 
-  Future<String> startLogin() {
-    return Future.delayed(Duration(seconds: 3), () {
+  Future<String> startLogin(String email,String password) {
+    return Future.delayed(Duration(seconds: 2), () {
       return "Login Successful";
     });
   }
