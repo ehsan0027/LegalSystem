@@ -14,13 +14,11 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   DashboardBloc _dashboardBloc;
-
   @override
   void initState() {
     _dashboardBloc = BlocProvider.of<DashboardBloc>(context);
     _dashboardBloc.add(GetAllCases());
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

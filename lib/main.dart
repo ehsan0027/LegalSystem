@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:legal_system/features/dashboard/bloc/dashboard_bloc.dart';
 import 'package:legal_system/features/login/login_bloc.dart';
+import 'package:legal_system/repository/auth_repository.dart';
 import 'package:legal_system/utils/app_color.dart';
 import 'package:legal_system/utils/routGenerator.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LoginBloc>(
-          create: (BuildContext context) => LoginBloc(),
+          create: (BuildContext context) => LoginBloc(authRepository: AuthRepositoryImpl()),
         ),
         BlocProvider<DashboardBloc>(
           create: (BuildContext context) => DashboardBloc(),

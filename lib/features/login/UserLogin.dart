@@ -44,6 +44,10 @@ class _UserLoginState extends State<UserLogin> {
                 print("Processing State");
                 return buildProcessing();
               }
+              else if (state is LoginDone) {
+                print("Done State ${state.msg}");
+                return buildProcessing();
+              }
               return buildProcessing();
             },
           ),

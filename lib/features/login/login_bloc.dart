@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:legal_system/repository/auth_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'login_event.dart';
@@ -9,8 +10,10 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  AuthRepository authRepository;
 
-  LoginBloc() : super(LoginInitial());
+  LoginBloc({this.authRepository}) : super(LoginInitial());
+
 
   @override
   Stream<LoginState> mapEventToState(
@@ -18,16 +21,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async* {
     if (event is LoginUser) {
       yield LoginProcesssing();
-      final String msg = await startLogin(event.email,event.password);
+      final String msg = await authRepository.userAuth(event.email,event.password);
       print("email : ${event.email}");
       print("Login msg:$msg");
       yield LoginDone(msg: "hi");
     }
   }
 
-  Future<String> startLogin(String email,String password) {
-    return Future.delayed(Duration(seconds: 2), () {
-      return "Login Successful";
-    });
-  }
 }
