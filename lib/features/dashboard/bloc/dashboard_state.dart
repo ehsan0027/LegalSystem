@@ -9,11 +9,14 @@ class DashboardInitial extends DashboardState {
   List<Object> get props => [];
 }
 class DashboardLoaded extends DashboardState {
+ DashboardRes dashboardRes;
 
-  String msg;
-
-  DashboardLoaded({this.msg});
+  DashboardLoaded({this.dashboardRes});
 
   @override
-  List<Object> get props => [msg];
+  List<Object> get props => [dashboardRes];
+}
+class DashboardError extends DashboardState {
+  @override
+  List<Object> get props => [];
 }

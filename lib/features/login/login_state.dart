@@ -23,3 +23,11 @@ class LoginDone extends LoginState {
   // TODO: implement props
   List<Object> get props => [msg];
 }
+class LoginError extends LoginState {
+  String msg;
+  LoginError({this.msg}):super();
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [msg];
+}

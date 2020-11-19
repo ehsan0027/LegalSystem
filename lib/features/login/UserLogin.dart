@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -13,13 +12,15 @@ class UserLogin extends StatefulWidget {
 }
 
 class _UserLoginState extends State<UserLogin> {
-
   LoginBloc _loginBloc;
+  final _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _userEmailCTL = TextEditingController();
+  final TextEditingController _userPasswordCTL = TextEditingController();
 
   @override
   void initState() {
-    _loginBloc=BlocProvider.of<LoginBloc>(context);
+    _loginBloc = BlocProvider.of<LoginBloc>(context);
   }
 
   @override
@@ -28,7 +29,7 @@ class _UserLoginState extends State<UserLogin> {
       backgroundColor: MyAppColor.myPrimaryColor,
       body: SingleChildScrollView(
         child: BlocListener<LoginBloc, LoginState>(
-          listener: (context, state){
+          listener: (context, state) {
             if (state is LoginDone) {
               print("Login is done.....");
               Navigator.of(context).pop(true);
@@ -43,12 +44,11 @@ class _UserLoginState extends State<UserLogin> {
               } else if (state is LoginProcesssing) {
                 print("Processing State");
                 return buildProcessing();
-              }
-              else if (state is LoginDone) {
+              } else if (state is LoginDone) {
                 print("Done State ${state.msg}");
                 return buildProcessing();
               }
-              return buildProcessing();
+              return buildError();
             },
           ),
         ),
@@ -90,106 +90,117 @@ class _UserLoginState extends State<UserLogin> {
                   SizedBox(height: 10.0),
                   Padding(
                     padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal * 5),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        SizedBox(
-                          height: SizeConfig.blockSizeVertical * 2,
-                        ),
-                        Theme(
-                          data: Theme.of(context).copyWith(
-                              primaryColor: MyAppColor.myPrimaryColor),
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'enter email';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
-                                // width: 0.0 produces a thin "hairline" border
-                                borderSide: const BorderSide(
-                                    color: Colors.grey, width: 0.0),
-                              ),
-                              border: OutlineInputBorder(),
-                              labelText: 'Email',
-                              labelStyle: TextStyle(
-                                  color: MyAppColor.myPrimaryColorDark),
-                              prefixIcon: Icon(
-                                Icons.mail,
-                                color: MyAppColor.myPrimaryColor,
-                              ),
-                            ),
-                            style: TextStyle(color: MyAppColor.myPrimaryColor),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical * 2,
                           ),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.blockSizeVertical * 2,
-                        ),
-                        Theme(
-                          data: Theme.of(context).copyWith(
-                              primaryColor: MyAppColor.myPrimaryColor),
-                          child: TextFormField(
-                            obscureText: true,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'missing password';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
-                                // width: 0.0 produces a thin "hairline" border
-                                borderSide: const BorderSide(
-                                    color: Colors.grey, width: 0.0),
-                              ),
-                              border: OutlineInputBorder(),
-                              labelText: 'Password',
-                              labelStyle: TextStyle(
-                                  color: MyAppColor.myPrimaryColorDark),
-                              prefixIcon: Icon(
-                                Icons.lock,
-                                color: MyAppColor.myPrimaryColor,
-                              ),
-                            ),
-                            style: TextStyle(color: MyAppColor.myPrimaryColor),
-                          ),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.blockSizeVertical * 3.5,
-                        ),
-                        Container(
-                          width: SizeConfig.screenWidth,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                side: BorderSide(
-                                    color: MyAppColor.myPrimaryColor)),
-                            color: MyAppColor.myPrimaryColor,
-                            child: Padding(
-                              padding: EdgeInsets.all(
-                                  SizeConfig.blockSizeHorizontal * 5),
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize:
-                                      SizeConfig.blockSizeHorizontal * 4.4,
+                          Theme(
+                            data: Theme.of(context).copyWith(
+                                primaryColor: MyAppColor.myPrimaryColor),
+                            child: TextFormField(
+                              controller: _userEmailCTL,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'enter email';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                enabledBorder: const OutlineInputBorder(
+                                  // width: 0.0 produces a thin "hairline" border
+                                  borderSide: const BorderSide(
+                                      color: Colors.grey, width: 0.0),
+                                ),
+                                border: OutlineInputBorder(),
+                                labelText: 'Email',
+                                labelStyle: TextStyle(
+                                    color: MyAppColor.myPrimaryColorDark),
+                                prefixIcon: Icon(
+                                  Icons.mail,
+                                  color: MyAppColor.myPrimaryColor,
                                 ),
                               ),
+                              style:
+                                  TextStyle(color: MyAppColor.myPrimaryColor),
                             ),
-                            onPressed: () async{
-                              //Send Decrease Counter EVent to the Bloc
-                              _loginBloc.add(LoginUser(email: "abcdgmail.com",password: "1234asx"));
-
-                            },
                           ),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.blockSizeVertical * 2,
-                        ),
-                      ],
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical * 2,
+                          ),
+                          Theme(
+                            data: Theme.of(context).copyWith(
+                                primaryColor: MyAppColor.myPrimaryColor),
+                            child: TextFormField(
+                              controller: _userPasswordCTL,
+                              obscureText: true,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'missing password';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                enabledBorder: const OutlineInputBorder(
+                                  // width: 0.0 produces a thin "hairline" border
+                                  borderSide: const BorderSide(
+                                      color: Colors.grey, width: 0.0),
+                                ),
+                                border: OutlineInputBorder(),
+                                labelText: 'Password',
+                                labelStyle: TextStyle(
+                                    color: MyAppColor.myPrimaryColorDark),
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: MyAppColor.myPrimaryColor,
+                                ),
+                              ),
+                              style:
+                                  TextStyle(color: MyAppColor.myPrimaryColor),
+                            ),
+                          ),
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical * 3.5,
+                          ),
+                          Container(
+                            width: SizeConfig.screenWidth,
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  side: BorderSide(
+                                      color: MyAppColor.myPrimaryColor)),
+                              color: MyAppColor.myPrimaryColor,
+                              child: Padding(
+                                padding: EdgeInsets.all(
+                                    SizeConfig.blockSizeHorizontal * 5),
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize:
+                                        SizeConfig.blockSizeHorizontal * 4.4,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  String email = _userEmailCTL.text.trim();
+                                  String pswd = _userPasswordCTL.text.trim();
+                                  _userPasswordCTL.text="";
+                                  _loginBloc.add(
+                                      LoginUser(email: email, password: pswd));
+                                }
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical * 2,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -231,9 +242,41 @@ class _UserLoginState extends State<UserLogin> {
       width: SizeConfig.screenWidth,
       height: SizeConfig.screenHeight,
       child: Center(
-        child: Text("Please wait...",style: TextStyle(
-          color: Colors.white
-        ),),
+        child: Text(
+          "Please wait...",
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  Widget buildError() {
+    return Container(
+      width: SizeConfig.screenWidth,
+      height: SizeConfig.screenHeight,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Something Went wrong",
+              style: TextStyle(color: Colors.white),
+            ),
+            FlatButton(
+              child:Text(
+                "Try Again",
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: (){
+                setState(() {
+                  _loginBloc.add(HandleException());
+                });
+              },
+
+            )
+          ],
+        ),
+
       ),
     );
   }

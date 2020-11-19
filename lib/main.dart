@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:legal_system/features/case_type/bloc/case_type_bloc.dart';
 import 'package:legal_system/features/dashboard/bloc/dashboard_bloc.dart';
 import 'package:legal_system/features/login/login_bloc.dart';
 import 'package:legal_system/repository/auth_repository.dart';
+import 'package:legal_system/repository/case_type_repository.dart';
+import 'package:legal_system/repository/dashboard_repository.dart';
 import 'package:legal_system/utils/app_color.dart';
 import 'package:legal_system/utils/routGenerator.dart';
 
@@ -17,11 +20,15 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LoginBloc>(
-          create: (BuildContext context) => LoginBloc(authRepository: AuthRepositoryImpl()),
+          create: (BuildContext context) =>
+              LoginBloc(authRepository: AuthRepositoryImpl()),
         ),
         BlocProvider<DashboardBloc>(
-          create: (BuildContext context) => DashboardBloc(),
+          create: (BuildContext context) =>
+              DashboardBloc(dashboardRepo: DashboardRepoImpl()),
         ),
+        BlocProvider<CaseTypeBloc>(
+            create: (BuildContext context) => CaseTypeBloc(caseTypeRepo: CaseTypeRepoImpl())),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -29,10 +36,9 @@ class MyApp extends StatelessWidget {
           primaryColor: MyAppColor.myPrimaryColor,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           cursorColor: MyAppColor.myPrimaryColor,
-          accentColor:MyAppColor.myPrimaryColor,
+          accentColor: MyAppColor.myPrimaryColor,
           hintColor: MyAppColor.myPrimaryColor,
-          focusColor:MyAppColor.myPrimaryColor,
-
+          focusColor: MyAppColor.myPrimaryColor,
         ),
         initialRoute: '/',
         onGenerateRoute: RoutGenerator.generateRoute,

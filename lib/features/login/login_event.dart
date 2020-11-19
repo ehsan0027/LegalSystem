@@ -13,3 +13,8 @@ class LoginUser extends LoginEvent {
   // TODO: implement props
   List<Object> get props => [email,password];
 }
+class HandleException extends LoginEvent {
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}

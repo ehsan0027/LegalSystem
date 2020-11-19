@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:legal_system/features/dashboard/bloc/dashboard_bloc.dart';
 import 'package:legal_system/model/case_model.dart';
+import 'package:legal_system/model/dashboard_res.dart';
 import 'package:legal_system/utils/app_color.dart';
 import 'package:legal_system/utils/size_configuration.dart';
+import 'package:legal_system/utils/widgets.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -43,25 +45,19 @@ class _DashboardState extends State<Dashboard> {
         child: BlocBuilder<DashboardBloc, DashboardState>(
           builder: (context, state) {
             if (state is DashboardInitial) {
-              return buildInitial();
+              return MyWidget.buildInitial();
             } else if (state is DashboardLoaded) {
-              return buildLoaded();
+              return _buildLoaded(state.dashboardRes);
             }
+            return MyWidget.buildError();
           },
         ),
       ),
     );
   }
 
-  Widget buildInitial() {
-    return Container(
-      width: SizeConfig.screenWidth,
-      height: SizeConfig.screenHeight,
-      child: Center(child: CircularProgressIndicator()),
-    );
-  }
+  Widget _buildLoaded(DashboardRes res) {
 
-  Widget buildLoaded() {
     return ListView(
       children: [
         Container(
@@ -87,7 +83,7 @@ class _DashboardState extends State<Dashboard> {
                       height: SizeConfig.blockSizeVertical * 2,
                     ),
                     Text(
-                      "27",
+                      "${res.data.casesFiled}",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: SizeConfig.blockSizeHorizontal * 13),
@@ -135,7 +131,7 @@ class _DashboardState extends State<Dashboard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "07",
+                              "${res.data.civilCases}",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: SizeConfig.blockSizeHorizontal * 7,
@@ -188,7 +184,7 @@ class _DashboardState extends State<Dashboard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "05",
+                              "${res.data.criminalCases}",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: SizeConfig.blockSizeHorizontal * 7,
@@ -246,7 +242,7 @@ class _DashboardState extends State<Dashboard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "02",
+                              "${res.data.foreignCases}",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: SizeConfig.blockSizeHorizontal * 7,
@@ -284,9 +280,9 @@ class _DashboardState extends State<Dashboard> {
                 child: InkWell(
                   onTap: () {
                     CaseModel m = CaseModel(
-                        title: "JURISDICTION",
-                        count: "04",
-                        img: 'assets/images/court.png');
+                        title: "CASES AGAINST",
+                        count: "05",
+                        img: 'assets/images/mayan_pyramid.png');
                     Navigator.of(context).pushNamed('/caseHome', arguments: m);
                   },
                   child: Container(
@@ -299,7 +295,7 @@ class _DashboardState extends State<Dashboard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "04",
+                              "${res.data.casesAgainst}",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: SizeConfig.blockSizeHorizontal * 7,
@@ -309,7 +305,7 @@ class _DashboardState extends State<Dashboard> {
                               width: SizeConfig.blockSizeHorizontal * 10,
                             ),
                             Image.asset(
-                              'assets/images/court.png',
+                              'assets/images/mayan_pyramid.png',
                               width: SizeConfig.blockSizeHorizontal * 12,
                               height: SizeConfig.blockSizeHorizontal * 12,
                             ),
@@ -319,7 +315,7 @@ class _DashboardState extends State<Dashboard> {
                           height: SizeConfig.blockSizeVertical,
                         ),
                         Text(
-                          "JURISDICTION",
+                          "CASES AGAINST",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: SizeConfig.blockSizeHorizontal * 4.4,
@@ -357,7 +353,7 @@ class _DashboardState extends State<Dashboard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "10",
+                              "${res.data.auction}",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: SizeConfig.blockSizeHorizontal * 7,
@@ -410,7 +406,7 @@ class _DashboardState extends State<Dashboard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "01",
+                              "${res.data.interpolCases}",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: SizeConfig.blockSizeHorizontal * 7,
@@ -448,6 +444,7 @@ class _DashboardState extends State<Dashboard> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Expanded(
+              flex: 1,
               child: Card(
                 color: MyAppColor.myPrimaryColor,
                 child: InkWell(
@@ -468,7 +465,7 @@ class _DashboardState extends State<Dashboard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "02",
+                              "${res.data.travelCases}",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: SizeConfig.blockSizeHorizontal * 7,
@@ -506,9 +503,9 @@ class _DashboardState extends State<Dashboard> {
                 child: InkWell(
                   onTap: () {
                     CaseModel m = CaseModel(
-                        title: "CASES AGAINST",
+                        title: "Law Firms",
                         count: "05",
-                        img: 'assets/images/mayan_pyramid.png');
+                        img: 'assets/images/court.png');
                     Navigator.of(context).pushNamed('/caseHome', arguments: m);
                   },
                   child: Container(
@@ -521,7 +518,7 @@ class _DashboardState extends State<Dashboard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "05",
+                              "${res.data.lawFirms}",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: SizeConfig.blockSizeHorizontal * 7,
@@ -531,7 +528,7 @@ class _DashboardState extends State<Dashboard> {
                               width: SizeConfig.blockSizeHorizontal * 10,
                             ),
                             Image.asset(
-                              'assets/images/mayan_pyramid.png',
+                              'assets/images/court.png',
                               width: SizeConfig.blockSizeHorizontal * 12,
                               height: SizeConfig.blockSizeHorizontal * 12,
                             ),
@@ -541,7 +538,7 @@ class _DashboardState extends State<Dashboard> {
                           height: SizeConfig.blockSizeVertical,
                         ),
                         Text(
-                          "CASES AGAINST",
+                          "Law Firms",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: SizeConfig.blockSizeHorizontal * 4.4,
@@ -553,6 +550,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
             ),
+
           ],
         ),
       ],
