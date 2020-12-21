@@ -12,7 +12,9 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   AuthRepository authRepository;
+
   LoginBloc({this.authRepository}) : super(LoginInitial());
+
   @override
   Stream<LoginState> mapEventToState(
     LoginEvent event,
@@ -21,22 +23,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoginProcesssing();
       print("email : ${event.email}");
       print("password : ${event.password}");
-      final loginRes = await authRepository.userAuth(event.email,event.password);
-      print("login res in bloc ${loginRes}");
-      if(loginRes != null)
-        {
-          GV.USER_TOKEN=loginRes.success.token;
-          yield LoginDone(msg: "hi");
-        }
-      else if(loginRes == null) {
+      final loginRes =
+          await authRepository.userAuth(event.email, event.password);
+      print("login res in bloc $loginRes");
+      if (loginRes != null) {
+        GV.USER_TOKEN = loginRes.success.token;
+        GV.USER_ROLE = loginRes.success.role;
+        yield LoginDone(msg: "hi");
+      } else if (loginRes == null) {
         print("Login Error...");
-       yield LoginError(msg:"Something went wrong" );
+        yield LoginError(msg: "Something went wrong");
       }
+    } else if (event is HandleException) {
+      yield LoginInitial();
     }
-    else if(event is HandleException)
-      {
-        yield LoginInitial();
-      }
   }
-
 }

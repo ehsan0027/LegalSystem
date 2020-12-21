@@ -8,7 +8,7 @@ import 'package:legal_system/model/dashboard_res.dart';
 import 'package:legal_system/utils/app_color.dart';
 import 'package:legal_system/utils/size_configuration.dart';
 import 'package:legal_system/utils/widgets.dart';
-
+import 'package:legal_system/utils/push_notifications.dart';
 class Dashboard extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
@@ -16,8 +16,11 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   DashboardBloc _dashboardBloc;
+  MyPushNotification _pushNotification;
   @override
   void initState() {
+    _pushNotification=MyPushNotification();
+    _pushNotification.init();
     _dashboardBloc = BlocProvider.of<DashboardBloc>(context);
     _dashboardBloc.add(GetAllCases());
   }
@@ -115,11 +118,7 @@ class _DashboardState extends State<Dashboard> {
                 color: MyAppColor.myPrimaryColor,
                 child: InkWell(
                   onTap: () {
-                    CaseModel m = CaseModel(
-                        title: "CIVIL CASES",
-                        count: "07",
-                        img: 'assets/images/mayan_pyramid.png');
-                    Navigator.of(context).pushNamed('/caseHome', arguments: m);
+                    Navigator.of(context).pushNamed('/civilCaseHome');
                   },
                   child: Container(
                     width: (SizeConfig.screenWidth - 10) / 2,
@@ -168,11 +167,8 @@ class _DashboardState extends State<Dashboard> {
                 color: MyAppColor.myPrimaryColor,
                 child: InkWell(
                   onTap: () {
-                    CaseModel m = CaseModel(
-                        title: "CRIMINAL CASES",
-                        count: "05",
-                        img: 'assets/images/criminal.png');
-                    Navigator.of(context).pushNamed('/caseHome', arguments: m);
+
+                    Navigator.of(context).pushNamed('/criminalCaseHome');
                   },
                   child: Container(
                     width: (SizeConfig.screenWidth - 10) / 2,
@@ -226,11 +222,7 @@ class _DashboardState extends State<Dashboard> {
                 color: MyAppColor.myPrimaryColor,
                 child: InkWell(
                   onTap: () {
-                    CaseModel m = CaseModel(
-                        title: "FOREIGN CASES",
-                        count: "02",
-                        img: 'assets/images/worldwide.png');
-                    Navigator.of(context).pushNamed('/caseHome', arguments: m);
+                    Navigator.of(context).pushNamed('/foreignCaseHome');
                   },
                   child: Container(
                     width: (SizeConfig.screenWidth - 10) / 2,
@@ -279,11 +271,8 @@ class _DashboardState extends State<Dashboard> {
                 color: MyAppColor.myPrimaryColor,
                 child: InkWell(
                   onTap: () {
-                    CaseModel m = CaseModel(
-                        title: "CASES AGAINST",
-                        count: "05",
-                        img: 'assets/images/mayan_pyramid.png');
-                    Navigator.of(context).pushNamed('/caseHome', arguments: m);
+
+                    // Navigator.of(context).pushNamed('/caseHome', arguments: m);
                   },
                   child: Container(
                     width: (SizeConfig.screenWidth - 10) / 2,
@@ -337,11 +326,8 @@ class _DashboardState extends State<Dashboard> {
                 color: MyAppColor.myPrimaryColor,
                 child: InkWell(
                   onTap: () {
-                    CaseModel m = CaseModel(
-                        title: "AUCTION",
-                        count: "10",
-                        img: 'assets/images/auction.png');
-                    Navigator.of(context).pushNamed('/caseHome', arguments: m);
+
+                    Navigator.of(context).pushNamed('/auctionHome');
                   },
                   child: Container(
                     width: (SizeConfig.screenWidth - 10) / 2,
@@ -390,11 +376,7 @@ class _DashboardState extends State<Dashboard> {
                 color: MyAppColor.myPrimaryColor,
                 child: InkWell(
                   onTap: () {
-                    CaseModel m = CaseModel(
-                        title: "INTERPOL",
-                        count: "01",
-                        img: 'assets/images/policeman.png');
-                    Navigator.of(context).pushNamed('/caseHome', arguments: m);
+                    Navigator.of(context).pushNamed('/interpolCaseHome');
                   },
                   child: Container(
                     width: (SizeConfig.screenWidth - 10) / 2,
@@ -449,11 +431,7 @@ class _DashboardState extends State<Dashboard> {
                 color: MyAppColor.myPrimaryColor,
                 child: InkWell(
                   onTap: () {
-                    CaseModel m = CaseModel(
-                        title: "TRAVEL BAN",
-                        count: "02",
-                        img: 'assets/images/airplane.png');
-                    Navigator.of(context).pushNamed('/caseHome', arguments: m);
+                    Navigator.of(context).pushNamed('/travelBanHome');
                   },
                   child: Container(
                     width: (SizeConfig.screenWidth - 10) / 2,
@@ -502,11 +480,7 @@ class _DashboardState extends State<Dashboard> {
                 color: MyAppColor.myPrimaryColor,
                 child: InkWell(
                   onTap: () {
-                    CaseModel m = CaseModel(
-                        title: "Law Firms",
-                        count: "05",
-                        img: 'assets/images/court.png');
-                    Navigator.of(context).pushNamed('/caseHome', arguments: m);
+                    Navigator.of(context).pushNamed('/lawFirmHome');
                   },
                   child: Container(
                     width: (SizeConfig.screenWidth - 10) / 2,

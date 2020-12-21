@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "343005834682",
+    "firebase_url": "https://legal-system-736b0.firebaseio.com",
+    "project_id": "legal-system-736b0",
+    "storage_bucket": "legal-system-736b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343005834682:android:ef9984eaffeb74db510183",
+        "android_client_info": {
+          "package_name": "com.example.legal_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343005834682-2g6oe7k8vqc1cucg15ol07q6k4kigd2t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaFjx4E9omVr02IMiWGKmUvwdYyJui8AM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343005834682-2g6oe7k8vqc1cucg15ol07q6k4kigd2t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

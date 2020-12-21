@@ -1,3 +1,7 @@
 class GV{
-  static var USER_TOKEN;
+  static String USER_TOKEN;
+  static String USER_ROLE;
+  static String case_type;
+  static var foreignCaseFirmId;
+  static int firmIndex;
 }

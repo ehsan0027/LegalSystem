@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:legal_system/model/login_res.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -14,12 +15,18 @@ class AuthRepositoryImpl extends AuthRepository {
   LoginRes _loginRes;
   @override
   Future<LoginRes> userAuth(String email, String password) async {
+
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    var ftoken= await _firebaseMessaging.getToken();
+    print("DeviceId $ftoken");
+
     int timeout = 5;
     try {
       print('auth started.........');
       var response = await http.post('${Const.BASE_URL}/login', body: {
         "email": email,
         "password": password,
+        "device_id":"$ftoken"
       }).timeout(Duration(seconds: timeout));
       print('auth ended.........');
 
