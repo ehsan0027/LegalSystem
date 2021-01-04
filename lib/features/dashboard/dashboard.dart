@@ -30,14 +30,6 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("Dashboard"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              Navigator.of(context).pushNamed('/notification');
-            },
-          )
-        ],
       ),
       body: BlocListener<DashboardBloc, DashboardState>(
         listener: (context, state) {

@@ -25,6 +25,9 @@ import 'package:legal_system/features/case_type/law_firm/law_firm_home.dart';
 import 'package:legal_system/features/case_type/travel_ban/travel_ban_case.dart';
 import 'package:legal_system/features/case_type/travel_ban/travel_ban_case_detail.dart';
 import 'package:legal_system/features/case_type/travel_ban/travel_ban_home.dart';
+import 'package:legal_system/features/coordinator/dashboard/coordinator_dashboard.dart';
+import 'package:legal_system/features/coordinator/request/coordinator_request.dart';
+import 'package:legal_system/features/coordinator/request/coordinator_view_request.dart';
 import 'package:legal_system/features/dashboard/dashboard.dart';
 import 'package:legal_system/features/notification/Notification_detail.dart';
 import 'package:legal_system/features/notification/notifications.dart';
@@ -208,6 +211,19 @@ class RoutGenerator {
       case '/caseDetail':
         {
           return MaterialPageRoute(builder: (_) => CaseDetail());
+        }
+
+        case '/coordinatorDashboard':
+        {
+          return MaterialPageRoute(builder: (_) => CoordinatorDashboard());
+        }
+      case '/coordinatorReq':
+        {
+          return MaterialPageRoute(builder: (_) => CoordinatorRequest(obj: args,));
+        }
+      case '/coordinatorViewReq':
+        {
+          return MaterialPageRoute(builder: (_) => CoordinatorViewReq(id: args,));
         }
       case '/notification':
         {

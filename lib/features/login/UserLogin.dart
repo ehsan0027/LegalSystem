@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:legal_system/features/login/login_bloc.dart';
 import 'package:legal_system/utils/app_color.dart';
+import 'package:legal_system/utils/gv.dart';
 import 'package:legal_system/utils/size_configuration.dart';
 
 class UserLogin extends StatefulWidget {
@@ -33,7 +34,12 @@ class _UserLoginState extends State<UserLogin> {
             if (state is LoginDone) {
               print("Login is done.....");
               Navigator.of(context).pop(true);
-              Navigator.of(context).pushNamed('/dashboard');
+
+              if (GV.USER_ROLE == 'Super Admin') {
+                Navigator.of(context).pushNamed('/dashboard');
+              } else if (GV.USER_ROLE == 'Coordinator') {
+                Navigator.of(context).pushNamed('/coordinatorDashboard');
+              }
             }
           },
           child: BlocBuilder<LoginBloc, LoginState>(
@@ -189,7 +195,7 @@ class _UserLoginState extends State<UserLogin> {
                                 if (_formKey.currentState.validate()) {
                                   String email = _userEmailCTL.text.trim();
                                   String pswd = _userPasswordCTL.text.trim();
-                                  _userPasswordCTL.text="";
+                                  _userPasswordCTL.text = "";
                                   _loginBloc.add(
                                       LoginUser(email: email, password: pswd));
                                 }
@@ -263,20 +269,18 @@ class _UserLoginState extends State<UserLogin> {
               style: TextStyle(color: Colors.white),
             ),
             FlatButton(
-              child:Text(
+              child: Text(
                 "Try Again",
                 style: TextStyle(color: Colors.white),
               ),
-              onPressed: (){
+              onPressed: () {
                 setState(() {
                   _loginBloc.add(HandleException());
                 });
               },
-
             )
           ],
         ),
-
       ),
     );
   }
